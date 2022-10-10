@@ -18,6 +18,16 @@ pub fn cas(ctx: &Context, args: Vec<RedisString>) -> RedisResult {
 
       Ok(RedisValue::Integer(0))
     }
+    [_, key, current] => {
+      if let RedisValue::SimpleString(value) = ctx.call("GET", &[key.try_as_str()?])? {
+        if value.eq(&current.try_as_str()?) {
+          let _ = ctx.call("DEL", &[key.try_as_str()?])?;
+          return Ok(RedisValue::Integer(1));
+        }
+      }
+
+      Ok(RedisValue::Integer(0))
+    }
     _ => Err(RedisError::WrongArity),
   }
 }
