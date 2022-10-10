@@ -1,0 +1,23 @@
+[package]
+authors = ["Thomas Sieverding <Thomas@bajix.com>"]
+name = "redis-cas"
+version = "1.0.0"
+edition = "2021"
+description = "Redis native module to add support for compare and swap"
+readme = "./README.md"
+license = "MIT"
+repository = "https://github.com/Bajix/redis-cas/"
+keywords = ["Redis"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+crate-type = ["cdylib"]
+name = "redis_cas"
+
+[dependencies]
+redis-module = { version = "1.0.1" }
+
+[profile.bench]
+lto = "fat"
+opt-level = 3
+codegen-units = 1

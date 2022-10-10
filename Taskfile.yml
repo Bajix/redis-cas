@@ -1,0 +1,12 @@
+version: '3'
+
+tasks:
+  load-redis-module:
+    cmds:
+      - if redis-cli module unload redis_cas; then brew services restart redis; fi
+      - cargo build --package redis-cas --release
+      - sleep 1
+      - redis-cli module load {{.MODULE_PATH}}
+    vars:
+      MODULE_PATH:
+        sh: echo "$(pwd)/target/release/libredis_cas.dylib"
