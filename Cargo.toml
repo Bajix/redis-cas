@@ -15,7 +15,7 @@ crate-type = ["cdylib"]
 name = "redis_cas"
 
 [dependencies]
-redis-module = { version = "1.0.1" }
+redis-module = { version = "2.0" }
 
 [profile.bench]
 lto = "fat"

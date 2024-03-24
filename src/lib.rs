@@ -3,7 +3,7 @@
 #[macro_use]
 extern crate redis_module;
 
-use redis_module::{Context, RedisError, RedisResult, RedisString, RedisValue};
+use redis_module::{alloc::RedisAlloc, Context, RedisError, RedisResult, RedisString, RedisValue};
 
 /// Compare and swap if current value unchanged
 pub fn cas(ctx: &Context, args: Vec<RedisString>) -> RedisResult {
@@ -35,6 +35,7 @@ pub fn cas(ctx: &Context, args: Vec<RedisString>) -> RedisResult {
 redis_module! {
   name: "redis_cas",
   version: 1,
+  allocator: (RedisAlloc, RedisAlloc),
   data_types: [],
   commands: [
     ["cas", cas, "write fast", 1, 1, 0],
